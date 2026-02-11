@@ -180,11 +180,13 @@ h4 { font-size: 1.05rem; font-weight: 600; font-family: var(--font-sans); }
 .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
 .contact-left h2 { margin-bottom: 16px; }
 .contact-left > p { color: var(--text-secondary); font-size: 1rem; line-height: 1.8; margin-bottom: 32px; }
+.contact-meta { margin-top: 32px; }
 .contact-email { display: inline-block; font-family: var(--font-serif); font-size: 1.2rem; color: var(--terra-dark); font-weight: 500; margin-bottom: 24px; transition: color 0.2s ease; }
 .contact-email:hover { color: var(--terra); }
 .contact-promises { display: flex; flex-direction: column; gap: 8px; }
 .contact-promises span { font-size: 0.8125rem; color: var(--text-muted); padding-left: 20px; position: relative; }
 .contact-promises span::before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--terra); }
+.contact-right { }
 .contact-form { background: var(--slate-50); border-radius: 12px; padding: 40px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
@@ -193,6 +195,7 @@ h4 { font-size: 1.05rem; font-weight: 600; font-family: var(--font-sans); }
 .form-field input::placeholder, .form-field textarea::placeholder { color: var(--slate-400); }
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--terra); box-shadow: 0 0 0 3px rgba(192,120,92,0.1); }
 .form-field textarea { resize: vertical; min-height: 100px; }
+.btn-full { width: 100%; justify-content: center; }
 .form-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 16px; }
 .form-success { text-align: center; padding: 48px 24px; }
 .form-success svg { color: var(--terra); margin-bottom: 16px; }
