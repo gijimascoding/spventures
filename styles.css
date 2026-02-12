@@ -240,7 +240,7 @@ h4 { font-size: 1.05rem; font-weight: 600; font-family: var(--font-sans); }
 }
 
 @media (max-width: 768px) {
-    .nav-links { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--white); flex-direction: column; justify-content: center; align-items: center; gap: 24px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; }
+    .nav-links { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--white); flex-direction: column; justify-content: center; align-items: center; gap: 24px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; padding: 80px 24px 40px; overflow-y: auto; }
     .nav-links.active { opacity: 1; pointer-events: all; }
     .nav-links a { font-size: 1.1rem; color: var(--text-secondary) !important; }
     .nav-links.active .nav-cta { color: var(--white) !important; background: var(--slate-900) !important; }
