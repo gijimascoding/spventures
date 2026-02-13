@@ -1,6 +1,16 @@
 const nodemailer = require('nodemailer');
 
 module.exports = async (req, res) => {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle OPTIONS request
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Method not allowed' });
@@ -8,6 +18,8 @@ module.exports = async (req, res) => {
 
   try {
     const { firstName, lastName, email, company, inquiryType, message } = req.body;
+
+    console.log('Received form submission:', { firstName, lastName, email, company, inquiryType });
 
     // Validate required fields
     if (!firstName || !lastName || !email) {
@@ -119,7 +131,9 @@ module.exports = async (req, res) => {
     };
 
     // Send email
-    await transporter.sendMail(mailOptions);
+    console.log('Attempting to send email...');
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', info.messageId);
 
     return res.status(200).json({
       success: true,
@@ -127,9 +141,17 @@ module.exports = async (req, res) => {
     });
   } catch (error) {
     console.error('Error sending inquiry email:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response
+    });
+
     return res.status(500).json({
       success: false,
-      message: 'Failed to send inquiry. Please try again later.'
+      message: error.message || 'Failed to send inquiry. Please try again later.',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };
