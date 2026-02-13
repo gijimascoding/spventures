@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Contact Form Handling (FormSubmit.co → info@spventures.co) ---
+    // --- Contact Form Handling (Nodemailer SMTP → info@spventures.co) ---
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         const submitBtn = contactForm.querySelector('button[type="submit"]');
@@ -179,15 +179,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData.entries());
 
             try {
-                const response = await fetch(contactForm.action, {
+                const response = await fetch('/api/send-inquiry', {
                     method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
                 });
 
-                if (response.ok) {
+                const result = await response.json();
+
+                if (response.ok && result.success) {
                     contactForm.innerHTML = `
                         <div class="form-success">
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -199,10 +204,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     `;
                 } else {
-                    throw new Error('Form submission failed');
+                    throw new Error(result.message || 'Form submission failed');
                 }
             } catch (error) {
-                const data = Object.fromEntries(formData.entries());
+                console.error('Form submission error:', error);
                 const subject = encodeURIComponent('Investment Inquiry | SP Ventures');
                 const body = encodeURIComponent(
                     `Name: ${data.firstName} ${data.lastName}\n` +
